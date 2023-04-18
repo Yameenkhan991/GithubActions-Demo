@@ -1,0 +1,16 @@
+name: Deploy HTML to EC2 instance
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Copy HTML to EC2 instance
+      run: scp -i ${{ secrets.PRIVATE_KEY }} index.html ec2-user@174.129.157.95:/var/www/html/
+      env:
+        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
